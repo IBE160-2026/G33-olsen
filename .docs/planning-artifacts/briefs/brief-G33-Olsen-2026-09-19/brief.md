@@ -33,6 +33,10 @@ The buyer can investigate the underlying information, compare suppliers, and cho
 
 The first version uses a deliberately small, one-level BOM model: a finished product maps directly to ingredients and packaging. Gross need is planned product quantity times the BOM quantity; net need is the positive remainder after usable on-hand inventory. A positive net need is the recommended order quantity. The latest safe order date is the production date minus the fixed lead time for that supplier-material combination. There is no safety stock, minimum order quantity, order multiple, multi-level BOM explosion, or automatic purchase placement. Delivery history describes supplier risk but does not change calculated quantities or deadlines. The complete definitions, validations, and hand-calculated demo inputs are in [MRP Calculation Rules and Demo Scenarios](calculation-rules.md).
 
+## AI Explanation Policy
+
+Every alert immediately shows an English standard explanation rendered from the application's calculated fictional facts. With valid server-side OpenAI configuration, the buyer may explicitly request an AI explanation using `gpt-5.6-sol`; the model selects only a closed plan of approved templates and evidence bindings, while the server validates and renders the text. It never calculates, changes, or adds facts or actions. Missing configuration, stale results, provider failures, or invalid plans leave the alert and standard explanation fully usable. The key handling, versioned contract, endpoint controls, validation, and fallback rules are defined in [AI Explanation and Keyless Fallback Plan](ai-explanation-plan.md).
+
 ## What Makes This Different
 
 The real alternatives are disconnected spreadsheets, manual checks, or acting late when a shortage is discovered. This approach brings the production plan, product structure, inventory, supplier delivery history, and packaging risk into one buyer-focused view. It answers the practical question: *What will be short, when will it be short, and what are my options?*
