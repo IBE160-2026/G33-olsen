@@ -2,7 +2,7 @@
 title: Product Brief: ProsjektMelk
 status: complete
 created: 2026-09-19
-updated: 2026-09-19
+updated: 2026-10-18
 ---
 
 # Product Brief: ProsjektMelk
@@ -29,6 +29,10 @@ When a planner selects or updates a production week, the buyer receives a clear 
 
 The buyer can investigate the underlying information, compare suppliers, and choose an appropriate response. An AI assistant explains each warning or recommendation in plain language. The result is a faster, safer decision process rather than an automated ordering system.
 
+## Calculation Rules
+
+The first version uses a deliberately small, one-level BOM model: a finished product maps directly to ingredients and packaging. Gross need is planned product quantity times the BOM quantity; net need is the positive remainder after usable on-hand inventory. A positive net need is the recommended order quantity. The latest safe order date is the production date minus the fixed lead time for that supplier-material combination. There is no safety stock, minimum order quantity, order multiple, multi-level BOM explosion, or automatic purchase placement. Delivery history describes supplier risk but does not change calculated quantities or deadlines. The complete definitions, validations, and hand-calculated demo inputs are in [MRP Calculation Rules and Demo Scenarios](calculation-rules.md).
+
 ## What Makes This Different
 
 The real alternatives are disconnected spreadsheets, manual checks, or acting late when a shortage is discovered. This approach brings the production plan, product structure, inventory, supplier delivery history, and packaging risk into one buyer-focused view. It answers the practical question: *What will be short, when will it be short, and what are my options?*
@@ -43,7 +47,7 @@ The primary user is a procurement planner or buyer responsible for securing ingr
 
 The product is working when a buyer can change a weekly production plan, identify a packaging or ingredient shortage, investigate a safe order date and supplier history, and understand the AI explanation before production is affected.
 
-For the demo, every predefined fictional scenario must be handled correctly: a production-plan increase, a packaging shortage, and a delayed supplier delivery. Each must show the affected material, the reason for the warning, and relevant buyer options. A usability check asks a user to identify the next action from the dashboard without manually calculating requirements. The project’s mission signal is that procurement risk becomes visible early enough to support an action before a planned production run.
+For the demo, every predefined fictional scenario must match the verified outcomes in the [MRP Calculation Rules and Demo Scenarios](calculation-rules.md): a production-plan increase, a packaging shortage, and a delayed supplier delivery. Each must show the affected material, the reason for the warning, its hand-checkable numeric result, and relevant buyer options. A usability check asks a user to identify the next action from the dashboard without manually calculating requirements. The project’s mission signal is that procurement risk becomes visible early enough to support an action before a planned production run.
 
 ## Scope + Vision
 
