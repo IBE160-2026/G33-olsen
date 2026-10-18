@@ -49,7 +49,7 @@ The primary user is a procurement planner or buyer responsible for securing ingr
 
 ## Success Criteria
 
-The product is working when a buyer can change a weekly production plan, identify a packaging or ingredient shortage, investigate a safe order date and supplier history, and understand the AI explanation before production is affected.
+The minimum submission is working when a buyer can change a weekly production plan, identify a packaging or ingredient shortage, verify the displayed calculation and latest safe order date, and understand the immediate standard explanation without a login, API key, or manual calculation. The complete first version additionally lets the buyer inspect and record supplier deliveries and, when configured, request an optional AI explanation without making that provider path necessary for the workflow.
 
 For the demo, every predefined fictional scenario must match the verified outcomes in the [MRP Calculation Rules and Demo Scenarios](calculation-rules.md): a production-plan increase, a packaging shortage, and a delayed supplier delivery. Each must show the affected material, the reason for the warning, its hand-checkable numeric result, and relevant buyer options. A usability check asks a user to identify the next action from the dashboard without manually calculating requirements. The project’s mission signal is that procurement risk becomes visible early enough to support an action before a planned production run.
 
@@ -57,13 +57,19 @@ For the demo, every predefined fictional scenario must match the verified outcom
 
 ### First Version
 
-The first release is a small, interactive browser dashboard with a simple login. It uses preloaded fictional data for a dairy product range: three yogurt flavours, milk with different fat percentages, butter, and sour cream. The data includes product BOMs, inventory levels, supplier details, lead times, recorded deliveries, and weekly production plans. Simple forms let the user change a plan and record a delivery so the demo remains interactive.
+The first release is a small, interactive browser dashboard that runs with preloaded fictional data and no login. Its implementation is deliberately gated into three increments; work moves to the next increment only after the earlier increment and its tests are stable.
 
-Version one calculates material requirements, flags shortages and ordering deadlines, records supplier delivery performance, provides AI explanations, and shows descriptive trends. The statistics cover production-volume trends by product, inventory movement by material, and supplier performance such as average lead time and late deliveries.
+1. **Core MRP demo:** let the buyer change a weekly production plan, calculate material requirements from the one-level BOM, show shortages and latest safe order dates, and immediately show the approved English standard explanation. It must reproduce the MRP quantities and deadlines in all three demo scenarios; the delayed-delivery warning itself belongs to increment 2. This is the minimum complete submission and takes priority over every later increment.
+2. **Supplier follow-up:** compare the descriptive delivery history already defined by the calculation rules, reproduce the delayed-delivery scenario's supplier-risk warning, and let the buyer record a delivery. This increment must not change calculated quantities or fixed-lead-time deadlines.
+3. **Optional provider-generated explanation:** offer the user-triggered AI explanation when valid server configuration is available. The core workflow and standard explanation must remain fully usable without a key or provider access.
+
+The seed data may represent the planned dairy range, but the three Blueberry Yogurt scenarios are the required acceptance path. Additional products or polish must not delay a stable, tested core flow.
 
 ### Outside the First Version
 
-It does not include real ERP or supplier-system integrations, automatic order placement, advanced demand forecasting, full production scheduling or capacity optimization, real company data, or enterprise-grade security.
+Descriptive trend dashboards for production volume, inventory movement, and supplier performance are deferred until after the first version. Login and user-account management are also deferred because a single-role fictional-data demo does not need a user identity to demonstrate its core value. The server may still issue a signed anonymous demo session for CSRF protection, AI-call deduplication, rate limits, and cache isolation; this is a technical control, not a user account or login flow.
+
+The first version also excludes real ERP or supplier-system integrations, automatic order placement, advanced demand forecasting, full production scheduling or capacity optimization, real company data, and enterprise-grade security.
 
 ### Vision
 

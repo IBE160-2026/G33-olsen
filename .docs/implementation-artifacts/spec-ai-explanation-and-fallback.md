@@ -133,7 +133,7 @@ The fallback is the stable presentation layer, not a degraded calculation path. 
 
 The trusted request covers both single-alert facts and weekly aggregation: selected week, ordered production rows, sequential inventory consumption, aggregated supplier-material recommendation, and earliest positive-shortage deadline. Every request and response carries the immutable calculation-result version; stale responses are discarded.
 
-Generation availability requires a valid key and model. The future endpoint must require the application's normal user session, accept one active request per alert/result version, deduplicate retries, apply a small per-user rate and usage cap, abort provider work on timeout or disconnect, and never expose whether failure came from credentials or account access.
+Generation availability requires a valid key and model. A later scope decision removed login from v1, so the future endpoint must use a signed anonymous demo session with same-origin/CSRF protection, accept one active request per alert/result version, deduplicate retries, apply a small per-session rate and usage cap, abort provider work on timeout or disconnect, and never expose whether failure came from credentials or account access.
 
 ## Verification
 
