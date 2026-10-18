@@ -11,7 +11,7 @@ The deliberately constrained AI path demonstrates optional model-guided presenta
 ## Buyer experience
 
 - Show **Standard explanation** immediately for every valid or blocked result.
-- Show **Generate AI explanation** only when the server has validated both required environment variables, the server-side generation kill switch is enabled, and the calculation result is eligible. Never call OpenAI automatically.
+- Show **Generate AI explanation** only when the server has validated all three required environment variables, the server-side generation kill switch is enabled, and the calculation result is eligible. Never call OpenAI automatically.
 - Keep the standard explanation visible while generation runs. After a valid response, render a separate **AI explanation**. The provider never supplies display-ready prose; it selects a closed explanation plan that the server renders in English from trusted values.
 - If configuration, eligibility, endpoint controls, the provider call, or validation fails, keep the alert and standard explanation usable and show only `AI explanation unavailable; showing the standard explanation.` Do not expose the failure category to the browser.
 - Present options as choices for the buyer. Never imply that ProsjektMelk has ordered, approved, contacted, expedited, or changed anything.
@@ -23,13 +23,14 @@ The committed repository root contains `.env.example` with exactly:
 ```dotenv
 OPENAI_API_KEY=
 OPENAI_MODEL=gpt-5.6-sol
+OPENAI_REASONING_EFFORT=high
 ```
 
 Developers copy these names to an ignored local `.env` file and put the real key there. `.gitignore` ignores `.env` and `.env.*` while allowing example files. A key must never be committed, logged, embedded in browser JavaScript, placed in a public environment-variable namespace, sent to the browser, or returned by an endpoint. Only server code may read it and call OpenAI.
 
-Generation is configured only when the trimmed key is non-empty and the trimmed model value is exactly the approved `gpt-5.6-sol`. Missing or invalid configuration, including a model unavailable to the account, is a normal fallback condition. The browser may receive one derived boolean, `aiExplanationAvailable`; it receives neither variable nor the reason generation is unavailable.
+Generation is configured only when the trimmed key is non-empty, the trimmed model value is exactly the approved `gpt-5.6-sol`, and `OPENAI_REASONING_EFFORT` is exactly `high`. The server passes the effort separately as `reasoning: { effort: "high" }` to the Responses API; `high` is not part of the model ID. Missing or invalid configuration, including a model unavailable to the account, is a normal fallback condition. The browser may receive one derived boolean, `aiExplanationAvailable`; it receives none of the variables or the reason generation is unavailable.
 
-`gpt-5.6-sol` is the exact user-selected model and must not be silently substituted. Its availability to the project's OpenAI account and API must be verified before application integration. Until then—and whenever that check later fails—the mandatory standard fallback is used.
+`gpt-5.6-sol` with `high` reasoning effort is the exact user-selected configuration and must not be silently substituted. Official OpenAI documentation lists the model, Structured Outputs, the Responses API, and `high` effort as supported; access for the project's own API account must still be verified before integration. Until then—and whenever that check later fails—the mandatory standard fallback is used. Higher effort may increase latency and reasoning-token usage, so the endpoint limits below remain mandatory.
 
 ## Immutable source data and request construction
 

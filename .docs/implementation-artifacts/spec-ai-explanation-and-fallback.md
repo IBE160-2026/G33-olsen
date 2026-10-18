@@ -28,7 +28,7 @@ context:
 
 ## Approved Decisions
 
-- Use OpenAI with `gpt-5.6-sol` as the configured model and `OPENAI_MODEL` as the server-side model variable. Current API availability was not established by the official OpenAI documentation search, so an unavailable-model response must use the same safe fallback as any provider failure.
+- Use OpenAI with `gpt-5.6-sol` as the configured model, `OPENAI_MODEL` as the server-side model variable, and `OPENAI_REASONING_EFFORT=high` as a separate server-side setting. Official documentation confirms model-level support, but unavailable project-account access must still use the same safe fallback as any provider failure.
 - Produce buyer-facing explanations in English. The user may continue collaborating on the project in Norwegian.
 - Show the deterministic standard explanation immediately. When a server-side API key is configured, offer a **Generate AI explanation** action rather than calling the model automatically.
 
@@ -55,7 +55,7 @@ context:
 
 **Execution:**
 - [x] `.docs/planning-artifacts/briefs/brief-G33-Olsen-2026-09-19/ai-explanation-plan.md` -- document the approved model, complete server configuration, weekly and per-alert trusted input, result-version binding, closed response schema with concrete limits, deterministic rendering, endpoint cost controls, template fallback, labels, and failure behavior -- provides an enforceable implementation contract requested by the teacher.
-- [x] `.env.example` -- add empty `OPENAI_API_KEY` and the approved `OPENAI_MODEL` value only -- gives developers and the assessor a copyable configuration example without a secret.
+- [x] `.env.example` -- add empty `OPENAI_API_KEY`, the approved `OPENAI_MODEL`, and `OPENAI_REASONING_EFFORT=high` -- gives developers and the assessor a copyable configuration example without a secret.
 - [x] `.docs/planning-artifacts/briefs/brief-G33-Olsen-2026-09-19/brief.md` -- add a concise AI-explanation policy and link to the detailed plan -- keeps the product promise traceable.
 - [x] `.docs/planning-artifacts/briefs/brief-G33-Olsen-2026-09-19/.memlog.md` -- record the approved model, language, interaction, key, and fallback decisions -- preserves the rationale.
 
@@ -80,7 +80,7 @@ context:
 
 ## Review Triage Log
 
-- `maybe-false` — The requested `gpt-5.6-sol` API availability could not be established from current official documentation. The exact account model list would settle whether the AI path works; the documented unavailable-model fallback prevents core-workflow failure, and the model choice remains user-owned; route: defer if still unresolved after re-derivation.
+- `false` — Later official OpenAI documentation confirms that `gpt-5.6-sol`, Structured Outputs, the Responses API, and `high` reasoning effort are supported. Project-account access remains a deployment-time check covered by the fallback.
 - `medium` — The example placed `shortage-reason` in the response `factIds` even though it was not a request fact, so a literal validator would reject the example; route: bad_spec.
 - `medium` — Free-form prose plus allowlisted IDs cannot reliably reject unsupported qualitative claims, so the sole-source-of-truth boundary was not enforceable; route: bad_spec.
 - `medium` — Weekly aggregation and sequential inventory-consumption facts from the calculation contract were absent, preventing accurate explanation of weekly recommendations; route: bad_spec.
@@ -107,7 +107,7 @@ context:
 - `medium` — Six option codes existed beside a four-option response cap without deterministic per-state selection; route: patch.
 - `medium` — Evidence kinds lacked an exact value-type, unit, nullability, and applicability registry, allowing incompatible renderers; route: patch.
 - `medium` — Deterministic rendering referenced nonexistent "existing" formatters without defining locale, precision, unit, plural, and date behavior; route: patch.
-- `maybe-false` — Carried: `gpt-5.6-sol` API availability remains unverified, and the configured-valid path depends on account access. An actual account model-list/API check is required to settle it; route: defer.
+- `false` — Later official OpenAI documentation confirms general API support. Only the project's account access remains unverified and requires an account model-list or API check before integration.
 - `medium` — The plan did not require OpenAI strict structured-output/schema enforcement or a fallback when that capability is unavailable; route: patch.
 - `medium` — Same-key retries were told both to reuse pending work and to receive fallback, creating conflicting behavior; route: patch.
 - `medium` — Per-user controls left project-wide concurrency and spend unbounded; route: patch with a small global demo ceiling and kill switch.

@@ -35,7 +35,7 @@ The first version uses a deliberately small, one-level BOM model: a finished pro
 
 ## AI Explanation Policy
 
-Every alert immediately shows an English standard explanation rendered from the application's calculated fictional facts. With valid server-side OpenAI configuration, the buyer may explicitly request an AI explanation using `gpt-5.6-sol`; the model selects only a closed plan of approved templates and evidence bindings, while the server validates and renders the text. It never calculates, changes, or adds facts or actions. Missing configuration, stale results, provider failures, or invalid plans leave the alert and standard explanation fully usable. The key handling, versioned contract, endpoint controls, validation, and fallback rules are defined in [AI Explanation and Keyless Fallback Plan](ai-explanation-plan.md).
+Every alert immediately shows an English standard explanation rendered from the application's calculated fictional facts. With valid server-side OpenAI configuration, the buyer may explicitly request an AI explanation using `gpt-5.6-sol` with `high` reasoning effort; the model selects only a closed plan of approved templates and evidence bindings, while the server validates and renders the text. It never calculates, changes, or adds facts or actions. Missing configuration, stale results, provider failures, or invalid plans leave the alert and standard explanation fully usable. The key handling, versioned contract, endpoint controls, validation, and fallback rules are defined in [AI Explanation and Keyless Fallback Plan](ai-explanation-plan.md).
 
 ## What Makes This Different
 
