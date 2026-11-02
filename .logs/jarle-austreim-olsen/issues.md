@@ -1,5 +1,7 @@
 # Åpne punkter
 
+- [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart datogrense for v1: mottaksdato må være gyldig og senest scenarioets Planning Date; fremtidig mottak endrer ikke saldo eller historikk. Mer avansert leveringsdato-/tilgjengelighetsberegning er dokumentert som mulig senere utvidelse i deferred-work.md. (løst 2026-11-02)
+
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart én samlet mottaksregistrering: scenarioets lager øker med godkjent mengde og én koblet global leverandørhistorikkpost opprettes atomisk, uten dobbeltregistrering. Presisert i FR-13/FR-25; datopolicy og øvrig kontraktsamordning gjenstår. (løst 2026-11-02)
 
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart og samordnet startlager kontra nåsaldo i PRD og MRP-R2: gjenstående behov bruker fysisk saldo = startsaldo + godkjente mottak − bokført forbruk; fullførte rader trekkes ikke på nytt. Dato-/ukesemantikk og øvrige deler av helhetsvalideringen gjenstår. (løst 2026-11-02)
