@@ -21,6 +21,8 @@ Hente siste endringer fra GitHub og lese nye regler for sesjonslogging. Brukeren
 - Kl. 20:27: Sammenlignet brief.md med faglærerens tre hovedpunkter, scope-spesifikasjonen, siste brief-beslutninger og PRD-ens brukerdefinisjon. Briefen er allerede oppdatert 18. oktober med beregningsregler, KI-fallback og trinnvis omfang. Anbefalte en kort samordning av Solution (standardforklaring først, KI valgfri), produksjonsplanleggerens rolle og den avgrensede demoen. Ingen produktdokumenter ble endret i denne vurderingen.
 
 ### Åpne punkter
+- Kl. 20:33: I pågående Assumption Audit godkjente brukeren at lagerdekning og materialbehov skal komme før vurdering av levering i tide. La presiseringen inn i briefens The Solution, oppdaterte datoen og registrerte beslutningen via BMAD memlog.py. Fast ledetid er et vurderingsgrunnlag, ikke leverandørbekreftelse; innkjøperen gir selv beskjed til produksjon. Elicitation og øvrig samordning av briefen fortsetter; ingen nye åpne punkter.
+
 - Avklare PRD A-1: Tilbakestilling av demodata krever bekreftelse før lokale endringer overskrives.
 - Avklare PRD A-2: Navngitt scenariovelger med separate planøyeblikksbilder, felles leverandørhistorikk og definert startscenario etter tilbakestilling.
 - Samordne briefens overordnede formuleringer med senere beslutninger: valgfri KI, produksjonsplanlegger som interessent uten egen v1-flyt og tydelig avgrenset Blueberry Yogurt-demo.
