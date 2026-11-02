@@ -1,6 +1,6 @@
 # Åpne punkter
 
-- [ ] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Samordne godkjent varemottak/avvik og fysisk forbruk i PRD FR-25–FR-26 med brief, kontrakter og tester; avklar scenarioeierskap, produksjonsrekkefølge og allokering før ny ferdigstilling. Batchsporing er utsatt, ikke et krav nå.
+- [ ] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Samordne godkjent varemottak/avvik og fysisk forbruk i PRD FR-25–FR-26 med brief, kontrakter og tester; avklar scenarioeierskap og saldo/uke ved fullført produksjon før ny ferdigstilling. Allokeringskonflikt er avklart: varsel og eksplisitt bekreftelse, ingen obligatorisk sperre ved tilstrekkelig fysisk lager. Batchsporing er utsatt, ikke et krav nå.
 
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Samordne briefens Solution/brukerbeskrivelse med valgfri KI, produksjonsplanlegger som interessent uten egen v1-flyt og avgrenset Blueberry Yogurt-demo. (løst 2026-11-02)
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Samordne PRD med ferdigstilt brief: eksplisitt visning av lagerbeholdning, allokert og disponibel mengde, manuell oppfølging ved mangel og verifiserte byggetrinn; behold eksisterende beregningsregler og avklar A-1/A-2. (løst 2026-11-02)
