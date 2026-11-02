@@ -1,5 +1,7 @@
 # Åpne punkter
 
+- [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart og samordnet startlager kontra nåsaldo i PRD og MRP-R2: gjenstående behov bruker fysisk saldo = startsaldo + godkjente mottak − bokført forbruk; fullførte rader trekkes ikke på nytt. Dato-/ukesemantikk og øvrige deler av helhetsvalideringen gjenstår. (løst 2026-11-02)
+
 - [ ] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Samordne FR-25–FR-26 med brief, kontrakter, releasetrinn og tester etter [helhetsvalideringen](../../.docs/planning-artifacts/prds/prd-G33-Olsen-2026-10-18/validation-report.md): entydig startlager/nåsaldo og kun gjenstående behov; mottakets kobling til felles leverandørhistorikk; datogrense mot Planning Date; mottaks-ID, tallgrenser og Completed-redigering; rett eldre motstrid om manglende ledetid; test lagerhendelser og KI-versjonering. Brukeravtalt scenarioisolering, varsel/overstyring, lagerbegreper og utsatt batch/angre beholdes. Ansvar: prosjekteier og PRD-agent før ny ferdigstilling/arkitektur.
 
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Samordne briefens Solution/brukerbeskrivelse med valgfri KI, produksjonsplanlegger som interessent uten egen v1-flyt og avgrenset Blueberry Yogurt-demo. (løst 2026-11-02)
