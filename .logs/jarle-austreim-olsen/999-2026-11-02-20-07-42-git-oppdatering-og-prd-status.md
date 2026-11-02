@@ -26,8 +26,10 @@ Hente siste endringer fra GitHub og lese nye regler for sesjonslogging. Brukeren
 - Brukeren bekreftet også at leveringsvurdering baseres på fast ledetid, mens innkjøper selv bekrefter faktisk levering med leverandør. Registrert via memlog.py; briefen beskriver allerede denne avgrensningen. Ingen nye åpne punkter.
 - Brukeren godkjente videre at appen viser manglende materiale, mengde og berørt produksjonsdato, med manuell planendring og ny beregning. La dette inn i briefen og registrerte via memlog.py. Automatisk omplanlegging og meldingsutsending er utenfor v1; eksisterende ukebegrensning på datoendringer beholdes. Ingen nye åpne punkter.
 
-### Åpne punkter
 - Brukeren godkjente presiseringer fra Pre-mortem og Steelmanning: små verifiserbare byggetrinn med kontrollert grunnlag før avhengige komponenter, samt samlet lager-/behovs-/fristoversikt som forventet fordel fremfor regneark. Oppdaterte First Version og What Makes This Different i briefen og registrerte beslutningen via memlog.py. Brukerfordelen er uttrykkelig en hypotese som dekkes av briefens eksisterende brukertest. Ingen nye åpne punkter.
+- Ferdigstilte briefen på brukerens instruks. Samordnet innledning, valgfri KI, produksjonsplanlegger som interessent og demoavgrensning; kondenserte gjentakelser. BMAD brief-arbeidsflytens påkrevde struktur- og prosa-gjennomgang ble utført av to delegerte lesere; forslagene ble innarbeidet. Kontrollerte mot faglærerens hovedpunkter og eksisterende beregnings-/KI-kontrakter, lenkemål og git diff --check. Ingen kode endret. Beslutninger og historiske avgrensninger er avstemt i BMAD-minneloggen; intet addendum nødvendig. Lukket brief-samordningspunktet i issues.md. PRD er fortsatt utkast og skal samordnes med ferdigstilt brief i neste steg.
+
+### Åpne punkter
 - Avklare PRD A-1: Tilbakestilling av demodata krever bekreftelse før lokale endringer overskrives.
 - Avklare PRD A-2: Navngitt scenariovelger med separate planøyeblikksbilder, felles leverandørhistorikk og definert startscenario etter tilbakestilling.
-- Samordne briefens overordnede formuleringer med senere beslutninger: valgfri KI, produksjonsplanlegger som interessent uten egen v1-flyt og tydelig avgrenset Blueberry Yogurt-demo.
+- Samordne PRD med ferdigstilt brief, særlig lagerbegreper, manuell oppfølging ved mangel og verifiserte byggetrinn.
