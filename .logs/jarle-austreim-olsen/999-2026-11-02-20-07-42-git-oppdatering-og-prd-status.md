@@ -24,6 +24,7 @@ Hente siste endringer fra GitHub og lese nye regler for sesjonslogging. Brukeren
 - Kl. 20:35: Brukeren godkjente begrepene lagerbeholdning, allokert mengde og disponibel mengde, med automatisk allokering fra tidligere produksjon i valgt uke. Presiserte dette i briefen og registrerte beslutningen i BMAD-minneloggen. Manuelle reservasjoner og innkommende ordre er fortsatt utenfor v1-beregningen. Kontrollerte samsvar med eksisterende ukentlig beregningsmodell og git diff --check; ingen kodeendring eller nye åpne punkter.
 
 ### Åpne punkter
+- Brukeren bekreftet også at leveringsvurdering baseres på fast ledetid, mens innkjøper selv bekrefter faktisk levering med leverandør. Registrert via memlog.py; briefen beskriver allerede denne avgrensningen. Ingen nye åpne punkter.
 - Avklare PRD A-1: Tilbakestilling av demodata krever bekreftelse før lokale endringer overskrives.
 - Avklare PRD A-2: Navngitt scenariovelger med separate planøyeblikksbilder, felles leverandørhistorikk og definert startscenario etter tilbakestilling.
 - Samordne briefens overordnede formuleringer med senere beslutninger: valgfri KI, produksjonsplanlegger som interessent uten egen v1-flyt og tydelig avgrenset Blueberry Yogurt-demo.
