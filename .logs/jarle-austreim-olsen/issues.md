@@ -1,5 +1,7 @@
 # Åpne punkter
 
+- [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart skrivebeskyttet mengde og dato for Completed-produksjon i FR-2/FR-26; historikk og saldo endres ikke ved redigeringsforsøk, mens gjenstående produksjon fortsatt kan redigeres. (løst 2026-11-02)
+
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart ukjent bestillingsdato: gyldig fysisk mottak kan bokføres; koblet leverandørpost merkes ufullstendig og utelates fra statistikk/risikogrunnlag. Mottaksdato og Planning Date må fortsatt være gyldige. (løst 2026-11-02)
 
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart datogrense for v1: mottaksdato må være gyldig og senest scenarioets Planning Date; fremtidig mottak endrer ikke saldo eller historikk. Mer avansert leveringsdato-/tilgjengelighetsberegning er dokumentert som mulig senere utvidelse i deferred-work.md. (løst 2026-11-02)
