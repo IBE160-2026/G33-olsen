@@ -1,5 +1,7 @@
 # Åpne punkter
 
+- [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart ukjent bestillingsdato: gyldig fysisk mottak kan bokføres; koblet leverandørpost merkes ufullstendig og utelates fra statistikk/risikogrunnlag. Mottaksdato og Planning Date må fortsatt være gyldige. (løst 2026-11-02)
+
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart datogrense for v1: mottaksdato må være gyldig og senest scenarioets Planning Date; fremtidig mottak endrer ikke saldo eller historikk. Mer avansert leveringsdato-/tilgjengelighetsberegning er dokumentert som mulig senere utvidelse i deferred-work.md. (løst 2026-11-02)
 
 - [x] 2026-11-02 [Git-oppdatering og PRD-status](999-2026-11-02-20-07-42-git-oppdatering-og-prd-status.md) — Avklart én samlet mottaksregistrering: scenarioets lager øker med godkjent mengde og én koblet global leverandørhistorikkpost opprettes atomisk, uten dobbeltregistrering. Presisert i FR-13/FR-25; datopolicy og øvrig kontraktsamordning gjenstår. (løst 2026-11-02)
