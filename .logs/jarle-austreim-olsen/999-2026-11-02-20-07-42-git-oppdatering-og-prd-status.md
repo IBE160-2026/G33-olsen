@@ -49,3 +49,28 @@ Hente siste endringer fra GitHub og lese nye regler for sesjonslogging. Brukeren
 - Under brukerens praktiske PRD-test avdekket vi at tidligere leveranseregistrering bare var statistikk. Brukeren ønsker totalmottak med avvik, godkjent mengde på lager, og fysisk forbruk med bevart historikk. Brukeren presiserte at avtalte lager-/allokerings-/disponibilitetsbegreper beholdes; fysisk forbruk er ikke allokering. Batchsporing utsettes. Godkjente deretter bekreftet produksjonsfullføring med beregnet BOM-forbruk, enkelt bokføring, blokkering ved utilstrekkelig lager og fjerning av fullført produksjon fra fremtidig behov. Registrerte FR-25/FR-26 og satte PRD tilbake til draft; identifiserte avklaringer om scenarioeierskap, rekkefølge og kontraktsamordning. Ingen programkode endret. Tidligere påstand om fullført avsluttende memlog-oppføring var ikke riktig: kommandoen ble avvist den gangen.
 - Samordne FR-25/FR-26 og avklare OQ-1–OQ-3 før PRD ferdigstilles på nytt; batchsporing kun mulig senere utvidelse.
 - Prosjekteier må verifisere tilgang til konfigurert modell i egen API-konto før valgfri KI-integrasjon; standardforklaring brukes uten tilgang. Se også .docs/implementation-artifacts/deferred-work.md.
+
+## 2026-11-03 kl. 18:20 — Jarle Austreim Olsen
+
+### Oppgave
+Fortsette avbrutt samordning av ProsjektMelk-brief, PRD og kontrakter, fullføre konsistenskontrollen og svare på om brukeren kan bytte Codex-modell eller resonneringsnivå underveis.
+
+### Plan
+- Kontrollere faktisk lagrede endringer og tidligere åpne punkter før videre arbeid.
+- Sammenholde de godkjente lager-/datoreglene og kontrollregne hele mottak–forbruk-flyten.
+- Fullføre rubrikk, kilde-/domenekontroll og struktur/prosa sekvensielt når de parallelle sluttrapportene var avbrutt.
+- Oppdatere rapportene, beslutningsloggene og issues.md; bevare andre lokale endringer.
+
+### Resultat
+- Samordnet Order Sent Date, Confirmed Delivery Date og Actual Receipt Date; ukjent bestillingsdato krever eksplisitt valg, oppgitte feilaktige datoer må rettes og faktisk mottak må ikke være etter scenarioets Planning Date. Ingen epostintegrasjon lagt til.
+- MRP-R8/R9/R10 definerer koblet mottak/historikk, avvik, fysisk forbruk, beholdning, once-only/replay, scenarioisolering og reset. Manglende ledetid/historikk/KI blokkerer ikke ellers gyldig fysisk forbruk. Avtalte lagerbegreper og allokeringsvarsel med overstyring er beholdt.
+- Brief og PRD følger fire godkjente trinn. Testkravene inkluderer fullt lagerforløp og forkastning av gamle KI-svar ved lager-/scenariobytte/reset. Opprinnelige tre demofasiter er uendret; egen lagerflyt-fixture er ikke et fjerde UI-scenario.
+- Kontrollregnet med eksakte desimaler og kalenderdatoer: 500 mottatt − 20 avvist = 480 godkjent; 650 + 480 = 1 130 beger; 800-produsert gir 20 kg puré, 330 beger, 50 oblater og 100 lokk igjen. Fire dagers faktisk ledetid og én dags forsinkelse stemmer. 980/220- og 300-mangeleksemplene stemmer også.
+- Verifiserte FR-1–26, UJ-1–5, SM-1–9, 19 lokale lenkemål og git diff --check. Ingen programkode er bygget, ingen apptestsuite kjørt og ingen betalte modellkall gjort.
+- Sluttgjennomgangene fra 2. november stoppet på bruksgrense før rapportene var ferdig skrevet. Primærassistenten fullførte kontrollen sekvensielt 3. november; rapportene påstår ikke nye uavhengige godkjenninger. Oppdaterte review-rubric.md, review-stock-consistency.md, review-source-consistency.md, editorial-notatet og validation-report.md/.html. Ingen gjenværende blokkering funnet i denne dokumentkontrollen; PRD merket final, oppdatert 2026-11-03.
+- Lukket det samlede dokumentsamordningspunktet i issues.md. Tilgang til valgt modell i egen API-konto er fortsatt en senere kontroll før valgfri integrasjon. Batch, reversering og mer komplekse datoberegninger forblir utsatt.
+- OpenAI Docs ble brukt på spørsmålet om «AI-kraft»: https://learn.chatgpt.com/docs/models beskriver bytte av modell og resonneringsnivå underveis og høyere ressursbruk ved mer resonnering. Rådet er høyere nivå ved vanskelig logikk/arkitektur/gjennomgang, raskere nivå ved små rettelser. Codex-valget endrer ikke automatisk ProsjektMelks valgte provider-modell. Ingen innstilling ble endret av assistenten.
+- BMAD-katalogen peker videre til UX, så arkitektur, deretter epics/stories. Bare denne loggen og issues.md tas med i sesjonslogg-commiten; ingen push.
+
+### Åpne punkter
+- Prosjekteier må verifisere tilgang til konfigurert modell i egen API-konto før valgfri KI-integrasjon; nøkkelfri standardforklaring beholdes uten tilgang. Punktet finnes allerede i issues.md.
