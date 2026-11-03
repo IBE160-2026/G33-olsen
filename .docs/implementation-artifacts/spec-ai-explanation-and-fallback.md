@@ -43,6 +43,16 @@ context:
 
 </frozen-after-approval>
 
+## Current Scope Reconciliation — 2026-11-02
+
+The frozen section above records the original October intent and review history. The current PRD and linked AI contract incorporate the later approved four-increment sequence: verified planning, physical stock movements with linked history, supplier comparison/risk, and optional AI in Increment 4. No stock operation is delegated to AI.
+
+The historical matrix's “Calculation blocked” row is not an instruction to hide a valid quantity when only Fixed Lead Time is missing: under MRP-R3 the quantity and supplier remain visible, only the deadline is unavailable, and generation is skipped. The current contract is authoritative for that partial-result behavior.
+
+Delivery labels are **Order Sent Date**, **Confirmed Delivery Date** (existing optional promised date), and **Actual Receipt Date** (existing delivery-received date). Operational confirmations, receipt validation, allocation-conflict override, and Completed history render deterministically. They introduce no new AI states, options, or evidence kinds.
+
+Current weekly planning evidence includes only outstanding production. The retained `weekly-starting-inventory` wire kind means current physical stock at calculation start, not historical Opening Balance. Receipts and production completion update affected calculation versions; scenario switches and full reset cannot accept a response or cache entry from a different scenario/reset context. This completes the earlier generic stale-result rule with explicit stock-event coverage; it does not replace the closed schema or change the approved provider model.
+
 ## Code Map
 
 - `.docs/planning-artifacts/briefs/brief-G33-Olsen-2026-09-19/brief.md` -- promises AI explanations and assessor-runnable v1 behavior; add only a concise policy and link.
@@ -66,6 +76,10 @@ context:
 - Given configuration documentation is inspected, when the key instructions are followed, then the real key stays uncommitted and unavailable to browser code.
 - Given an alert changes while generation is in flight, when the older response arrives, then its result-version mismatch prevents it from replacing the current explanation.
 - Given repeated generation attempts or an expired request, when endpoint controls run, then duplicate paid calls are rejected and timed-out provider work is aborted.
+- Given a receipt or completion changes a planning result while generation is in flight or an old plan is cached, when that older plan returns, then it is rejected against the current version and the newly calculated standard explanation remains visible.
+- Given generation began in another scenario or before confirmed reset, when its response or cache entry is returned, then it cannot attach to the active context even if baseline quantities happen to match.
+- Given production is Completed, when weekly planning evidence is built, then its row and posted consumption are excluded from outstanding demand without changing the closed request schema.
+- Given a receipt/completion confirmation or allocation-conflict warning is opened, when it renders, then no provider call is made for that operational state; explicit user controls alone can authorize the stock posting.
 
 ## Implementation Notes
 
@@ -74,6 +88,8 @@ context:
 - Review loop 1 reverted the first derivation because its free-form output contract could not enforce the approved source-of-truth boundary.
 
 ## Spec Change Log
+
+- 2026-11-02: Reconciled the AI contract with approved physical receipts, production consumption, scenario isolation, and the four-increment release order. Added explicit late-response/cache regression cases for receipts, completion, shared supplier-history changes, scenario switching, and reset; preserved the generic version-binding mechanism, existing closed schema/registries, selected model, and deterministic operational controls. Application code and automated provider tests remain future work.
 
 - 2026-10-18: Added the AI explanation implementation contract, linked it from the product brief, and recorded the approved decisions in the brief memory log.
 - 2026-10-18 review loop 1: Review found internally inconsistent evidence IDs, unenforceable free-form claim validation, missing weekly facts and result-version binding, undefined schema limits, absent endpoint controls, and incomplete edge-case verification. The execution tasks and acceptance criteria now require a closed response plan referencing unique evidence IDs, deterministic server rendering, a versioned weekly/per-alert payload, concrete limits, stale-response rejection, deduplication/rate/concurrency controls, timeout cancellation, a real `.env.example`, and complete negative cases. Avoids accepting stale, swapped, invented, incomplete, or financially unbounded AI output. KEEP the approved model, English output, user-triggered generation, server-only key, immediate standard explanation, and keyless/provider-failure fallback.
@@ -142,6 +158,8 @@ Generation availability requires a valid key and model. A later scope decision r
 - Review the no-key, timeout, invalid-output, and blocked-calculation paths and confirm each ends in a usable deterministic explanation.
 - Confirm that no real secret value appears in tracked files.
 - Confirm the contract tests duplicate or unknown IDs, missing required references, swapped bindings, extra properties, blank output plans, unsupported template combinations, size/array limits, stale versions, repeated requests, timeout abortion, and missing supplier or multiple validation errors.
+- Trace current physical stock and outstanding-only rows into weekly evidence; verify that the historical Opening Balance and Completed demand are not counted again.
+- Verify the documented fake-provider cases for stock posting, shared-history changes, scenario switch, and reset reject stale late responses and old cache entries; verify operational confirmations never call the provider.
 
 **Completed:**
 - Traced the allowed request fields to the calculation contract's alert basis, ordering rules, validation messages, and delivery-history summary.

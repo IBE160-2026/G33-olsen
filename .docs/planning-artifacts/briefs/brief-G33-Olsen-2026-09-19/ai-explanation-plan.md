@@ -8,6 +8,14 @@ All explanation data is fictional. Explanations never place an order or change a
 
 The deliberately constrained AI path demonstrates optional model-guided presentation inside a closed safety boundary. It is not needed for correctness or usability: deterministic output remains sufficient for every result and fallback path.
 
+Optional AI belongs to Increment 4, after verified planning, physical stock movements, and supplier comparison/risk. The approved receipt and production-completion workflows do not expand the provider's closed schema, evidence registry, option set, or template registry. Only eligible planning results for outstanding production may enter this explanation path; a **Completed** row remains visible as history but is not a current planning alert.
+
+### Operational controls and date labels
+
+Receipt validation, receipt/deviation acknowledgments, production-consumption previews, completion confirmations, allocation-conflict warnings and explicit overrides, and **Completed** status are deterministic application UI. They must work without a model call and must not be treated as new AI alert states or AI-controlled buyer options. The model cannot confirm a receipt, approve an override, invent a date, or authorize a stock movement. Deterministic posting acknowledgments may describe the successfully committed result; the planning explanation must never claim that presenting an option performed that action.
+
+The delivery workflow uses the visible English labels **Order Sent Date**, **Confirmed Delivery Date**, and **Actual Receipt Date**. Confirmed Delivery Date is the existing optional promised date supplied by the fictional supplier; Actual Receipt Date is the existing delivery-received date when goods physically arrived. They are not interchangeable. Unknown Order Sent Date remains unknown and does not become an inferred date. These labels clarify existing delivery facts without adding evidence kinds or sending raw receipt records to the model. Only an accepted, posted physical receipt changes stock; a confirmed future delivery date alone does not.
+
 ## Buyer experience
 
 - Show **Standard explanation** immediately for every valid or blocked result.
@@ -36,12 +44,14 @@ Generation is configured only when the trimmed key is non-empty, the trimmed mod
 
 The browser sends only `alertId`, the displayed `resultVersion`, and an idempotency key. Before reserving capacity or invoking the provider, the server rejects a displayed version that differs from the current alert version. It then reconstructs the provider request from the same immutable, validated calculation-result snapshot used to render the alert. Client-supplied facts, options, labels, and text are ignored. `resultVersion` is an opaque, immutable revision or digest that changes whenever any input or calculated output used by the explanation changes; a digest is lowercase hexadecimal prefixed with `result-` so it satisfies the safe-ID grammar.
 
+The existing version rule also covers posted stock movements and planning context. A successful receipt, production completion, or shared-history update must recalculate affected outstanding results and invalidate their prior versions whenever their facts, row membership, or risk evidence change. Failed or canceled postings make no stock/history change. The version identity must distinguish the owning scenario and its reset revision as well as calculation facts; identical material names or numeric values in two scenarios do not make their results interchangeable. On scenario switch, an in-flight response for the previous scenario must not attach to the newly active view. Confirmed **Reset demo data** retires prior result contexts, including cached or in-flight results, even when the restored baseline numbers happen to match an earlier snapshot. None of this adds a provider request field: the opaque version and existing server-owned alert identity bind the context.
+
 Before a provider call, the server validates the following request rules:
 
 - `contractVersion` is `1`, `language` is `en`, and `scope` is `per-alert` or `weekly`.
 - `alertId`, `resultVersion`, every evidence ID, row ID, collection ID, and option ID matches `^[a-z][a-z0-9-]{0,63}$`. All evidence, row, collection, and option IDs are globally unique within the request. Conflicting or duplicate IDs reject the request before the provider call.
 - The JSON request is at most 24 KiB and contains at most 128 evidence items, 12 production rows, one collection, and four permitted options. Text values are server-owned fictional names or enum codes, never user-entered free text, and are at most 100 characters.
-- Dates use `YYYY-MM-DD`, selected weeks use `YYYY-Www`, numeric values are finite JSON numbers, units come from the calculation result, and arrays use the deterministic ordering below.
+- Dates are real Gregorian dates in exact `YYYY-MM-DD` form, selected weeks use valid `YYYY-Www`, numeric values are finite JSON numbers within the calculation contract's product-level bounds, units come from the calculation result, and arrays use the deterministic ordering below.
 - There are no credentials, raw database records, personal data, real-company data, provider errors, or fields not already represented in the buyer-visible result.
 
 The provider request has this closed top-level shape; no additional properties are allowed. The empty arrays below illustrate the property names only and do not form an eligible call for the shown positive-shortage state:
@@ -79,7 +89,7 @@ Each evidence item has exactly `id`, `kind`, `value`, and `unit`; `unit` is a st
 | `production-date`, `latest-safe-order-date`, `weekly-earliest-shortage-deadline` | Valid `YYYY-MM-DD` string | `null` |
 | `selected-week` | Valid `YYYY-Www` string | `null` |
 | `deadline-state` | Exactly `future`, `order-today`, or `overdue` | `null` |
-| `production-quantity` | Finite number greater than zero | Product unit from the result |
+| `production-quantity` | Integer from 1 through 1,000,000 | Product unit from the result |
 | `bom-quantity` | Finite number greater than zero | Material unit per product unit, for example `kg/cup` |
 | `gross-need`, `available-inventory`, `net-need`, `recommended-quantity`, `weekly-total-gross-need`, `weekly-starting-inventory`, `weekly-recommended-quantity`, `inventory-before`, `covered-quantity`, `sequential-shortage`, `inventory-after` | Finite number zero or greater | Material unit from the result |
 | `lead-time-days`, `overdue-days`, `valid-delivery-count`, `late-delivery-count`, `greatest-recorded-delay-days` | Integer zero or greater | `calendar-day` for day values; `delivery` for delivery counts |
@@ -104,7 +114,7 @@ For a valid per-alert result, include the applicable product, material, producti
 
 ### Weekly facts
 
-For a weekly alert, also include selected week, weekly total gross need, starting inventory, aggregated supplier-material recommended quantity, and the earliest deadline among rows with a positive sequential shortage. `productionRows` contains the engine's rows in ascending production date, then ascending product name, then ascending row ID as the final stable tie-breaker. Every row has exactly:
+For a weekly alert, also include selected week, total outstanding gross need, the current physical stock at the start of this outstanding-demand calculation, aggregated supplier-material recommended quantity, and the earliest deadline among outstanding rows with a positive sequential shortage. The existing wire kind `weekly-starting-inventory` and template slot `startingInventory` mean this current calculation's stock input, not historical Opening Balance. The UI's calculation context must make that distinction clear; retain the existing wire name and exact template registry. `productionRows` contains only the engine's outstanding rows in ascending production date, then ascending product name, then ascending row ID as the final stable tie-breaker. Completed rows and their posted consumption are not included again. Every row has exactly:
 
 ```json
 {
@@ -119,7 +129,7 @@ For a weekly alert, also include selected week, weekly total gross need, startin
 }
 ```
 
-The row slots require `product`, `production-date`, `gross-need`, `inventory-before`, `covered-quantity`, `sequential-shortage`, and `inventory-after` respectively, and each referenced item may belong to only one row. A single `weekly-sequence` collection lists every row ID in exactly the displayed order. The model can reference that collection but cannot reorder, omit, or edit its rows. This preserves sequential inventory consumption and prevents inventory from being counted twice.
+The row slots require `product`, `production-date`, `gross-need`, `inventory-before`, `covered-quantity`, `sequential-shortage`, and `inventory-after` respectively, and each referenced item may belong to only one row. A single `weekly-sequence` collection lists every outstanding row ID in exactly the displayed calculation order, excluding Completed rows that are shown separately as history. The model can reference that collection but cannot reorder, omit, or edit its rows. The sequence describes planned allocation against current stock, not a second physical-consumption posting, and prevents inventory from being counted twice.
 
 The collection has exactly this shape: `{ "id": "sequence-1", "kind": "weekly-sequence", "rowIds": ["row-1"] }`. `rowIds` contains every and only production-row ID once. Per-alert requests have no collections or production rows.
 
@@ -137,7 +147,7 @@ The server, not the model, constructs the exact ordered option set. The response
 
 ## Eligibility and deterministic blocked handling
 
-Skip the model call whenever a required production, BOM, unit, inventory, lead-time, or supplier input is missing or invalid. Preserve the calculation contract's partial-result rule: invalid lead time blocks only the deadline, so the standard explanation still includes any valid quantity recommendation and its supplier, followed by the exact lead-time validation message. A positive shortage without a supplier keeps its calculated quantity but displays `Cannot prepare a purchase option: a supplier is required for <material>.`
+Skip the model call whenever a required production, BOM, unit, inventory, lead-time, supplier, deadline, or deadline-urgency input is missing or invalid. Preserve the calculation contract's partial-result rule: invalid lead time blocks only the deadline, so the standard explanation still includes any valid quantity recommendation and its supplier, followed by the exact lead-time validation message. An invalid Planning Date preserves valid quantity and Latest Safe Order Date but blocks deadline urgency and generation. A positive shortage without a supplier keeps its calculated quantity but displays `Cannot prepare a purchase option: a supplier is required for <material>.` If late/delay statistics are unavailable because a no-promise record lacks valid Fixed Lead Time, no Supplier Risk or delivery-history AI evidence is produced. If current deadline input is unavailable, no Supplier Risk or risk evidence is produced even when valid delivery history contains a positive delay; the deterministic Standard Explanation uses the MRP-R6 unavailable-risk message.
 
 Collect all applicable validation messages; never stop after the first. Render them in the calculation-rules table order, then by material name and stable field ID. This makes multiple failures complete and deterministic. A blocked result never manufactures a recommendation, deadline, supplier, option, or risk statement.
 
@@ -259,7 +269,7 @@ Standard and AI rendering consume the same immutable result snapshot, option ord
 At minimum, deterministic rendering covers:
 
 - positive recommendation: material, gross need, usable inventory, net need/recommended quantity, supplier, deadline state/date, and every permitted buyer option;
-- weekly recommendation: selected week, total gross need, starting inventory, every ordered sequential-consumption row, aggregated supplier-material recommendation, earliest positive-shortage deadline, and options;
+- weekly recommendation: selected week, total outstanding gross need, current physical stock at calculation start, every ordered outstanding allocation row, aggregated supplier-material recommendation, earliest positive-shortage deadline, and options;
 - no shortage: gross need is covered, net need is zero, and no purchase is recommended;
 - deadline unavailable: valid quantity and supplier followed by the exact lead-time validation message, without an invented date;
 - all blocked inputs: every exact validation message in deterministic order and no manufactured output;
@@ -276,3 +286,19 @@ Logs may contain only a non-secret diagnostic category, local correlation ID, sa
 Future automated contract tests must run and pass for all four matrix paths: configured-valid generation, no key, provider unavailable (including timeout cancellation, unavailable model, and unsupported strict-schema capability), and blocked calculation. Additional negative cases must cover unknown, missing, and duplicate IDs; conflicting request IDs; evidence types, units, nullability, and state presence; extra properties; blank plans; array and byte limits; wrong language or version; a displayed-version mismatch before invocation; stale result replacement; swapped semantic bindings; omitted required templates or values; reordered clauses, bindings, or options; empty/subset options; inapplicable risk/deadline templates; missing supplier; multiple validation errors and their order; weekly row tie ordering, deadline-unavailable aggregation, and earliest-row risk binding; Markdown/HTML-shaped strings; same-key joining, different-key rejection, atomic racing requests, demo-session and project caps, the two-call global ceiling, kill-switch behavior, cache policy-version invalidation, safe retry delays; disconnect and timeout abortion; and late provider completion. Tests must assert that every rejection preserves the standard explanation and that no rejected or stale plan replaces current content.
 
 A source review must additionally confirm that environment access and provider calls exist only in server code, browser bundles contain no key or provider configuration, tracked files contain no real secret, and no provider-supplied text reaches the renderer.
+
+### Stock-event and scenario-context regression cases
+
+Use deterministic provider fakes; these are requirements for future tests, not evidence that application tests have already run.
+
+| Event during generation or after a cached plan exists | Required assertion |
+|---|---|
+| Post a valid receipt that changes accepted stock and an outstanding shortage | Recalculate and show the new Standard Explanation immediately; the affected result version changes, and neither the old response nor its cache entry can replace the current result. A receipt with unknown Order Sent Date changes stock but supplies no invented supplier-statistics evidence. |
+| Post a valid receipt whose linked global delivery history changes a risk summary in another scenario | Only the owning scenario's stock changes. Recalculate/version any other affected supplier-risk result; reject stale risk evidence without inventing a stock transfer. |
+| Confirm production completion | Deduct physical stock once, remove the Completed row from outstanding demand and provider row collections, and bind any new explanation to the new result. Old per-row output cannot reappear as an active shortage for Completed production. |
+| Cancel a receipt or completion, or reject an invalid posting | No stock/history effect occurs. The operational response remains deterministic and triggers no provider call; do not claim that a posting succeeded. |
+| Switch scenarios while generation is active | A response belongs only to its original scenario/result context and cannot render in the newly active scenario, even if quantities happen to be equal. Returning to a scenario still requires validation against its current version. |
+| Confirm a full demo reset while generation is active or a plan is cached | Restore the documented baseline and retire the old context. An old response/cache cannot become current merely because reset restored equal numbers. Baseline arithmetic remains unchanged. |
+| Open receipt/completion confirmation, allocation-conflict warning, or Completed history | No model call is offered or made for the operational state. Keep the closed planning state/option/template registry unchanged and render these controls deterministically. |
+
+For every successful result-changing event, test both a late in-flight response and retrieval of an earlier validated cached plan. They must fail the current context/version check while the new standard result remains usable. Existing baseline scenario numbers, response schema, registry versions, selected model, and reasoning setting remain unchanged by this reconciliation.

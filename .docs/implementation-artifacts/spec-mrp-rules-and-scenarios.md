@@ -30,14 +30,16 @@ context:
 - V1 has no safety stock: net need is calculated only from gross need and available inventory.
 - The recommended order quantity equals positive net need; minimum order quantities and order multiples are deferred.
 - Each supplier-material combination uses one fixed lead time in v1; delivery history is descriptive only and does not change the deadline rule.
-- All three worked scenarios use a compact blueberry-yogurt example with one ingredient, one cup, and one lid.
+- All three worked scenarios use a compact blueberry-yogurt example with one raw material, one cup, one foil seal (oblat), and one lid. The user approved the foil-seal addition during PRD creation; its inventory covers all three scenarios so the previously approved shortage quantities and deadlines remain unchanged.
 
 ## I/O & Edge-Case Matrix
+
+**Historical specification note — 2026-11-02:** The original planning intent below is preserved. Later user-approved stock receipt/consumption requirements are defined by current PRD FR-25/FR-26 and calculation-contract MRP-R8–MRP-R10. The table's missing-lead-time wording is corrected to the already-approved partial-result rule; it is not permission to suppress a valid quantity recommendation.
 
 | Scenario | Input / State | Expected Output / Behavior | Error Handling |
 |---|---|---|---|
 | Plan increase | A weekly quantity increases for a product with a defined BOM and inventory | Gross need, net need, recommendation, and latest safe order date are derived from the stated rule | Zero or negative net need creates no purchase recommendation |
-| Packaging shortage | Required cups or lids exceed available stock | The affected packaging material, shortage quantity, and buyer action are visible | Missing BOM, stock, or lead-time data blocks the recommendation and identifies the missing input |
+| Packaging shortage | Required cups or lids exceed available stock | The affected packaging material, shortage quantity, and buyer action are visible | Missing BOM or stock blocks the affected recommendation; missing/invalid lead time preserves valid quantity and blocks only its deadline, with the calculation-contract message |
 | Delayed delivery | A recorded delivery arrives later than its promised or standard lead time | The supplier delay and resulting material risk are explained without changing calculated quantities | A delivery with incomplete dates is excluded from lead-time statistics and marked incomplete |
 
 </frozen-after-approval>
@@ -69,6 +71,10 @@ context:
 - Verified all three scenario calculations and the documented missing-data and incomplete-delivery behavior with Node assertions.
 
 ## Spec Change Log
+
+- 2026-11-02: Reconciled the older packaging-validation wording with MRP-R3: missing lead time blocks only a deadline, never a valid recommendation quantity. Current accepted scope includes scenario-local receipts/physical consumption under MRP-R8–MRP-R10 and four release increments; the historical planning-only specification is not the complete current scope. Supplier comparison is Increment 3 and optional AI is Increment 4. Existing named baseline quantities and deadlines remain unchanged.
+
+- 2026-10-18: During PRD creation, the user expanded the compact one-level BOM with Yogurt foil seal (oblat) and approved a descriptive two-supplier Yogurt-lid comparison. This supersedes only the earlier three-line fixture wording; it preserves the approved formulas, validation rules, and three shortage outcomes.
 
 ## Review Triage Log
 

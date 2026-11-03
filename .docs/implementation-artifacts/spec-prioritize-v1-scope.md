@@ -21,6 +21,8 @@ context:
 
 ## Implementation Notes
 
+**Historical scope note — 2026-11-02:** This completed specification records the October three-increment decision. The user subsequently approved a four-increment sequence: verified MRP, goods receipt/physical consumption with linked history, supplier comparison/risk, then optional AI. Current scope and gates are defined in brief.md and PRD §9. The original intent and review history below are preserved, not instructions to omit the later approved stock workflow.
+
 - Replaced the flat first-version feature list with three dependency-ordered increments and made the verified MRP scenarios the minimum complete submission.
 - Deferred descriptive trends and login while preserving supplier follow-up, optional AI explanation, the approved calculation boundaries, and keyless operation.
 - Updated the product-brief memory log so later PRD, architecture, epic, and story work inherits the same priority order.

@@ -2,75 +2,70 @@
 title: Product Brief: ProsjektMelk
 status: complete
 created: 2026-09-19
-updated: 2026-10-18
+updated: 2026-11-03
 ---
 
 # Product Brief: ProsjektMelk
 
 ## Executive Summary
 
-The AI-Assisted Dairy Procurement Planner is a browser-based decision-support tool for a fictional dairy manufacturer. It helps procurement planners prevent production stoppages by showing how a weekly production plan affects material availability, supplier risk, and purchase needs. It supports—not replaces—the buyer’s judgment.
-
-It matters now because a production plan set a week ahead can change when customer orders change. The buyer must quickly judge whether ingredients and packaging, especially cups and lids, will still arrive in time. A clearer overview supports safer decisions before a shortage stops production.
+ProsjektMelk is a browser-based decision-support dashboard for a buyer at a fictional dairy manufacturer. It shows whether materials cover a changed weekly production plan, what is missing, and whether fixed supplier lead times allow a new order to arrive before production starts. The required demo uses three Blueberry Yogurt scenarios. The buyer makes purchasing decisions and coordinates any production-plan changes.
 
 ## The Problem
 
-Production plans are set about a week in advance but can change when customer orders change. A late plan adjustment can expose a shortage of essential materials—particularly packaging such as cups and lids—and stop production. A buyer may also need to account for many suppliers with different actual lead times, without a clear record of the time from placing an order to receiving the goods.
-
-The cost of the status quo is lost production time, rushed purchasing decisions, and less confidence in whether an order will arrive in time. Overstock and expiry remain relevant for dairy operations, but the immediate priority is avoiding material shortages that prevent a planned run from taking place.
+Customer orders can change a production plan set a week ahead. The buyer must quickly determine whether ingredients and packaging, especially cups and lids, still cover the plan. Missing materials or uncertain supplier lead times can cause rushed purchases and production stoppages. Overstock and expiry are secondary concerns; the immediate priority is avoiding shortages that prevent a planned run.
 
 ## The Solution
 
-When a planner selects or updates a production week, the buyer receives a clear priority list:
+The buyer selects a production week and sees on-hand inventory, quantities automatically allocated to earlier production in that week, and the remaining quantity available before each run. The dashboard highlights shortages with the missing material, quantity, affected production date, recommended order quantity, and latest safe order date.
 
-1. Immediate shortage warnings, for example a blueberry-yogurt lid shortage before Thursday.
-2. Recommended order quantities and the latest safe order dates.
-3. Supplier-delivery comparisons based on recorded order and delivery dates.
+Fixed lead time provides a planning assessment, not confirmation of supplier availability. If the deadline has passed, the buyer must confirm timely supply or discuss a plan change with production. The buyer can manually edit quantity or date within the selected week and see recalculated results. Supplier follow-up adds descriptive delivery comparisons. Every alert has a standard explanation; configured AI explanations are optional.
 
-The buyer can investigate the underlying information, compare suppliers, and choose an appropriate response. An AI assistant explains each warning or recommendation in plain language. The result is a faster, safer decision process rather than an automated ordering system.
+One receipt form records total and rejected quantities, Order Sent Date (or explicitly unknown), optional Confirmed Delivery Date from the supplier, and Actual Receipt Date. Only accepted, actually received goods increase stock; the promised date is not proof of receipt. Receipt dates must not be after the scenario Planning Date. Completion confirms calculated BOM consumption once and keeps read-only production history. The demo uses current stock, not historical or future date-effective balances.
 
 ## Calculation Rules
 
-The first version uses a deliberately small, one-level BOM model: a finished product maps directly to ingredients and packaging. Gross need is planned product quantity times the BOM quantity; net need is the positive remainder after usable on-hand inventory. A positive net need is the recommended order quantity. The latest safe order date is the production date minus the fixed lead time for that supplier-material combination. There is no safety stock, minimum order quantity, order multiple, multi-level BOM explosion, or automatic purchase placement. Delivery history describes supplier risk but does not change calculated quantities or deadlines. The complete definitions, validations, and hand-calculated demo inputs are in [MRP Calculation Rules and Demo Scenarios](calculation-rules.md).
+The one-level bill of materials (BOM) maps a finished product directly to ingredients and packaging. Gross need is production quantity times BOM quantity per product unit. Net need is gross need minus available inventory, floored at zero; a positive net need is the recommended order quantity. The latest safe order date is production date minus fixed supplier-material lead time in calendar days. Safety stock, minimum quantities, order multiples, and multi-level BOMs are excluded. Delivery history never changes quantities or deadlines. Exact rules, validations, and hand-calculated scenarios are in [MRP Calculation Rules and Demo Scenarios](calculation-rules.md).
 
 ## AI Explanation Policy
 
-Every alert immediately shows an English standard explanation rendered from the application's calculated fictional facts. With valid server-side OpenAI configuration, the buyer may explicitly request an AI explanation using `gpt-5.6-sol` with `high` reasoning effort; the model selects only a closed plan of approved templates and evidence bindings, while the server validates and renders the text. It never calculates, changes, or adds facts or actions. Missing configuration, stale results, provider failures, or invalid plans leave the alert and standard explanation fully usable. The key handling, versioned contract, endpoint controls, validation, and fallback rules are defined in [AI Explanation and Keyless Fallback Plan](ai-explanation-plan.md).
+Every alert immediately shows an English standard explanation based on the application's calculated fictional facts. With valid server-side OpenAI configuration, the buyer may request an optional AI explanation. The model only selects approved templates and existing evidence; the server validates and renders the text. AI never calculates or adds facts or actions. Missing configuration or failed validation leaves the standard explanation usable. The selected model, reasoning setting, server-only API key handling, cost controls, and fallback contract are documented in [AI Explanation and Keyless Fallback Plan](ai-explanation-plan.md).
 
 ## What Makes This Different
 
-The real alternatives are disconnected spreadsheets, manual checks, or acting late when a shortage is discovered. This approach brings the production plan, product structure, inventory, supplier delivery history, and packaging risk into one buyer-focused view. It answers the practical question: *What will be short, when will it be short, and what are my options?*
-
-The application is deliberately transparent: it shows the basis for an alert and lets the buyer investigate recommendations or compare suppliers. The AI explains the result, but the buyer retains responsibility for the decision. The advantage is a tighter, more understandable workflow—not an invented technical moat.
+The real alternatives are spreadsheets and manual checks. The application brings on-hand inventory, allocated and available quantities, material requirements, and ordering deadlines into one buyer-focused view. Changes to the production plan automatically update the calculations and show each shortage with its calculation basis and the affected production run. The intended advantage is helping the buyer understand the consequences of a plan change more quickly; this remains a usability hypothesis to check with a user. It answers the practical question: *What will be short, when will it be short, and what are my options?*
 
 ## Who This Serves
 
-The primary user is a procurement planner or buyer responsible for securing ingredients and packaging for a dairy manufacturer. They need to understand the consequences of a changing production plan and decide whether to place or adjust an order. Success for them is identifying a material risk and a safe next action before production is affected. A production planner is a secondary user who benefits from seeing material constraints before changing the schedule.
+The primary user is a procurement buyer responsible for securing ingredients and packaging. Success means identifying a material constraint and a safe next action before production is affected. The production planner is a secondary stakeholder who may inspect the same dashboard, with no separate role, permissions, or workflow in the first version. The buyer enters demo plan changes and coordinates with production outside the app.
 
 ## Success Criteria
 
-The minimum submission is working when a buyer can change a weekly production plan, identify a packaging or ingredient shortage, verify the displayed calculation and latest safe order date, and understand the immediate standard explanation without a login, API key, or manual calculation. The complete first version additionally lets the buyer inspect and record supplier deliveries and, when configured, request an optional AI explanation without making that provider path necessary for the workflow.
+The minimum submission lets a buyer change a production plan, inspect shortages and their calculation basis, and understand quantities, deadlines, and standard explanations without login or an API key. The provider-independent first version adds goods receipt with deviations, confirmed physical consumption, retained history, and supplier comparison. Current stock equals opening balance plus accepted receipts minus posted consumption; completed production is not counted again. Configured AI remains optional.
 
-For the demo, every predefined fictional scenario must match the verified outcomes in the [MRP Calculation Rules and Demo Scenarios](calculation-rules.md): a production-plan increase, a packaging shortage, and a delayed supplier delivery. Each must show the affected material, the reason for the warning, its hand-checkable numeric result, and relevant buyer options. A usability check asks a user to identify the next action from the dashboard without manually calculating requirements. The project’s mission signal is that procurement risk becomes visible early enough to support an action before a planned production run.
+The three fictional scenarios—plan increase, packaging shortage, and delayed delivery—must match the linked hand-calculated outcomes, showing affected material, cause, quantity, date, and buyer options. The delayed-delivery risk warning is verified in increment 3. A usability check asks a user to identify the shortage, affected production, and next action without manually calculating requirements.
 
 ## Scope + Vision
 
 ### First Version
 
-The first release is a small, interactive browser dashboard that runs with preloaded fictional data and no login. Its implementation is deliberately gated into three increments; work moves to the next increment only after the earlier increment and its tests are stable.
+The dashboard runs with preloaded fictional data and no login. Each increment starts only after the previous flow and its tests are stable.
 
-1. **Core MRP demo:** let the buyer change a weekly production plan, calculate material requirements from the one-level BOM, show shortages and latest safe order dates, and immediately show the approved English standard explanation. It must reproduce the MRP quantities and deadlines in all three demo scenarios; the delayed-delivery warning itself belongs to increment 2. This is the minimum complete submission and takes priority over every later increment.
-2. **Supplier follow-up:** compare the descriptive delivery history already defined by the calculation rules, reproduce the delayed-delivery scenario's supplier-risk warning, and let the buyer record a delivery. This increment must not change calculated quantities or fixed-lead-time deadlines.
-3. **Optional provider-generated explanation:** offer the user-triggered AI explanation when valid server configuration is available. The core workflow and standard explanation must remain fully usable without a key or provider access.
+Build each increment in small, verifiable steps: check inventory and allocation before dependent shortage calculations, then verify quantities and deadlines against hand-calculated examples before adding supplier follow-up or AI.
+
+1. **Core MRP demo:** reproduce quantities and deadlines in all three verified baseline scenarios with standard explanations and no API key. This is the minimum complete submission; the delayed-delivery risk warning belongs to increment 3.
+2. **Goods receipt and physical consumption:** register total receipt and deviations once, add only accepted quantity to the active scenario's stock, and create linked supplier history. Confirm completed production to deduct consumption once, retain read-only history, and recalculate outstanding demand. Warn about allocation conflicts and allow explicit confirmation when physical stock is sufficient. Verify these flows, persistence, and reset before continuing.
+3. **Supplier follow-up:** compare descriptive delivery history and reproduce the delayed-delivery risk warning. History never changes formulas or fixed lead times; physical receipts and consumption change stock inputs and therefore calculated needs.
+4. **Optional provider-generated explanation:** offer the user-triggered AI explanation when valid server configuration is available. The core workflow and standard explanation must remain fully usable without a key or provider access.
 
 The seed data may represent the planned dairy range, but the three Blueberry Yogurt scenarios are the required acceptance path. Additional products or polish must not delay a stable, tested core flow.
 
 ### Outside the First Version
 
-Descriptive trend dashboards for production volume, inventory movement, and supplier performance are deferred until after the first version. Login and user-account management are also deferred because a single-role fictional-data demo does not need a user identity to demonstrate its core value. The server may still issue a signed anonymous demo session for CSRF protection, AI-call deduplication, rate limits, and cache isolation; this is a technical control, not a user account or login flow.
+Trend dashboards for production volume, inventory movement, and supplier performance, plus login and account management, are deferred. A signed anonymous technical session protects optional AI requests without introducing a user account.
 
-The first version also excludes real ERP or supplier-system integrations, automatic order placement, advanced demand forecasting, full production scheduling or capacity optimization, real company data, and enterprise-grade security.
+The first version also excludes manual reservations, incoming-order supply in calculations, email or real ERP/supplier integrations, automatic ordering or rescheduling, advanced forecasting, full production scheduling/capacity optimization, real company data, and enterprise-grade security. Batch tracing, individual posting reversal, production-consumption deviations, and date-effective supply calculations are possible later extensions documented in [Deferred Work](../../../implementation-artifacts/deferred-work.md).
 
 ### Vision
 
-Within two to three years, the product could expand with demand forecasting, deeper production scheduling, and integration with a real ERP. These phases would improve data quality, support production execution, and connect the application to live operational data while preserving its core goal: helping buyers understand and act on procurement risk.
+Longer term, the product could add demand forecasting, deeper production scheduling, and ERP integration while preserving buyer control over procurement decisions.
